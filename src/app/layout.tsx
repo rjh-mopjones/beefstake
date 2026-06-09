@@ -21,7 +21,7 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Beefstake — The World Cup 2026 Sweepstake Almanac",
+  title: "Beefstake - The Battle of The Empty Heads",
   description: "Live scores and the league table for the beefstake World Cup sweepstake.",
 };
 
