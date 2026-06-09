@@ -43,7 +43,8 @@ const T = {
   Qatar: team("Qatar", "🇶🇦", "QAT"),
   SouthKorea: team("South Korea", "🇰🇷", "KOR", ["Korea Republic", "Korea, South"]),
   Colombia: team("Colombia", "🇨🇴", "COL"),
-  Bosnia: team("Bosnia & Herzegovina", "🇧🇦", "BIH", [
+  Bosnia: team("Bosnia", "🇧🇦", "BIH", [
+    "Bosnia & Herzegovina",
     "Bosnia and Herzegovina",
     "Bosnia-Herzegovina",
   ]),
