@@ -271,7 +271,39 @@ export default function Home() {
               <h2 className="section-head text-2xl">The League Table</h2>
               <hr className="rule flex-1" />
             </div>
-            <div className="overflow-x-auto border-2 border-ink">
+            {/* Mobile: stacked cards, no horizontal scroll */}
+            <div className="space-y-3 sm:hidden">
+              {data.entrants.map((e) => (
+                <div key={e.name} className="border-2 border-ink p-3">
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="flex items-baseline gap-2">
+                      <span className="display text-3xl leading-none text-ink-soft">
+                        {e.rank}
+                      </span>
+                      <span className="font-display text-2xl uppercase tracking-wide">
+                        {e.name}
+                      </span>
+                    </div>
+                    <div className="text-right leading-none">
+                      <div className="display text-3xl text-red">{e.goals}</div>
+                      <div className="kicker mt-1">Top Goals</div>
+                    </div>
+                  </div>
+                  <hr className="rule my-2.5" />
+                  <div className="grid gap-y-1.5 text-[0.95rem]">
+                    {e.teams.map((t) => (
+                      <Selection key={t.code} team={t} />
+                    ))}
+                  </div>
+                  <div className="mt-2.5 font-mono text-xs text-ink-soft">
+                    {e.alive}/3 in
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Desktop: full league table */}
+            <div className="hidden overflow-x-auto border-2 border-ink sm:block">
               <table className="w-full border-collapse text-left">
                 <thead>
                   <tr className="kicker border-b-2 border-ink bg-paper-3/50 [&>th]:px-3 [&>th]:py-2.5">
@@ -279,7 +311,6 @@ export default function Home() {
                     <th>Punter</th>
                     <th>Selections</th>
                     <th className="text-right">Top Goals</th>
-                    <th className="text-right">Pts</th>
                     <th className="text-right">In</th>
                   </tr>
                 </thead>
@@ -305,7 +336,6 @@ export default function Home() {
                       <td className="display text-right text-2xl leading-none text-red">
                         {e.goals}
                       </td>
-                      <td className="text-right font-mono text-sm">{e.points}</td>
                       <td className="text-right font-mono text-sm text-ink-soft">
                         {e.alive}/3
                       </td>
@@ -315,9 +345,9 @@ export default function Home() {
               </table>
             </div>
             <p className="mt-2 font-serif text-sm italic text-ink-soft">
-              &ldquo;Top&rdquo; is each punter&apos;s best single team&apos;s goal
-              tally — the £40 prize. Standings by top tally, then points, then
-              teams surviving.
+              &ldquo;Top Goals&rdquo; is each punter&apos;s best single team&apos;s
+              tally — the £40 prize. &ldquo;In&rdquo; is teams still alive.
+              Ranked by survival first, then top goals.
             </p>
           </section>
 

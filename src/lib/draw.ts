@@ -97,7 +97,7 @@ export const ENTRANTS: Entrant[] = [
   { name: "Bogman", teams: [T.Haiti, T.Mexico, T.Japan] },
   { name: "Flop", teams: [T.Iran, T.Portugal, T.Tunisia] },
   { name: "Norm", teams: [T.Croatia, T.Iraq, T.Scotland] },
-  { name: "Dan B", teams: [T.Spain, T.Australia, T.NewZealand] },
+  { name: "Budge", teams: [T.Spain, T.Australia, T.NewZealand] },
 ];
 
 export const ALL_TEAMS: Team[] = ENTRANTS.flatMap((e) => e.teams);
