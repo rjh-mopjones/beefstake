@@ -314,8 +314,8 @@ export default function Home() {
           {/* ── Live ─────────────────────────────────────────── */}
           {data.matches.live.length > 0 && (
             <section className="rise mt-8 border-2 border-red bg-red/5 p-4">
-              <div className="kicker mb-1 text-red">
-                <span className="blip">●</span> Stop Press — Live from the ground
+              <div className="kicker mb-1 text-center text-red">
+                <span className="blip">●</span> Live from the ground
               </div>
               <div className="divide-y divide-ink/15">
                 {data.matches.live.map((m) => (
