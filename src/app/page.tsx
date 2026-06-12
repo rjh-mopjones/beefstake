@@ -114,13 +114,19 @@ function Fixture({ m }: { m: MatchLine }) {
         )}
         {m.home.name} {m.home.flag}
       </span>
-      <span
-        className={`shrink-0 font-mono text-sm font-bold ${
-          m.live ? "text-red" : "text-ink"
-        }`}
-      >
-        {m.live && <span className="blip mr-1">●</span>}
-        {hasScore ? `${m.home.goals}–${m.away.goals}` : "v"}
+      <span className="flex shrink-0 items-center gap-1.5">
+        <span
+          className={`font-mono text-sm font-bold ${
+            m.live ? "text-red" : "text-ink"
+          }`}
+        >
+          {hasScore ? `${m.home.goals}–${m.away.goals}` : "v"}
+        </span>
+        {m.live && (
+          <span className="inline-flex items-center gap-1 rounded-sm bg-red px-1 py-px text-[0.55rem] font-bold uppercase tracking-wider text-paper">
+            <span className="blip">●</span> Live
+          </span>
+        )}
       </span>
       <span className="min-w-0 flex-1 truncate text-left">
         {m.away.flag} {m.away.name}
@@ -136,6 +142,61 @@ function Fixture({ m }: { m: MatchLine }) {
         </span>
       )}
     </div>
+  );
+}
+
+function PaginatedFixtures({
+  matches,
+  empty,
+  perPage = 8,
+}: {
+  matches: MatchLine[];
+  empty: string;
+  perPage?: number;
+}) {
+  const [page, setPage] = useState(0);
+
+  if (matches.length === 0) {
+    return <p className="py-3 font-serif italic text-ink-soft">{empty}</p>;
+  }
+
+  const pageCount = Math.ceil(matches.length / perPage);
+  // Data refreshes every 60s and the list can shrink, so clamp to range.
+  const current = Math.min(page, pageCount - 1);
+  const start = current * perPage;
+  const shown = matches.slice(start, start + perPage);
+
+  return (
+    <>
+      <div className="divide-y divide-ink/15">
+        {shown.map((m) => (
+          <Fixture key={m.id} m={m} />
+        ))}
+      </div>
+      {pageCount > 1 && (
+        <div className="mt-2 flex items-center justify-between border-t border-ink/30 pt-2 font-mono text-[0.62rem] uppercase tracking-widest text-ink-soft">
+          <button
+            type="button"
+            onClick={() => setPage(current - 1)}
+            disabled={current === 0}
+            className="enabled:hover:text-red disabled:opacity-30"
+          >
+            ← Prev
+          </button>
+          <span>
+            Page {current + 1} / {pageCount}
+          </span>
+          <button
+            type="button"
+            onClick={() => setPage(current + 1)}
+            disabled={current >= pageCount - 1}
+            className="enabled:hover:text-red disabled:opacity-30"
+          >
+            Next →
+          </button>
+        </div>
+      )}
+    </>
   );
 }
 
@@ -356,32 +417,18 @@ export default function Home() {
             <div className="rise" style={{ animationDelay: "0.4s" }}>
               <h2 className="section-head mb-1 text-lg">Latest Results</h2>
               <hr className="rule mb-1" />
-              {data.matches.recent.length > 0 ? (
-                <div className="divide-y divide-ink/15">
-                  {data.matches.recent.map((m) => (
-                    <Fixture key={m.id} m={m} />
-                  ))}
-                </div>
-              ) : (
-                <p className="py-3 font-serif italic text-ink-soft">
-                  Not a ball kicked yet.
-                </p>
-              )}
+              <PaginatedFixtures
+                matches={data.matches.recent}
+                empty="Not a ball kicked yet."
+              />
             </div>
             <div className="rise" style={{ animationDelay: "0.48s" }}>
               <h2 className="section-head mb-1 text-lg">Fixtures</h2>
               <hr className="rule mb-1" />
-              {data.matches.upcoming.length > 0 ? (
-                <div className="divide-y divide-ink/15">
-                  {data.matches.upcoming.map((m) => (
-                    <Fixture key={m.id} m={m} />
-                  ))}
-                </div>
-              ) : (
-                <p className="py-3 font-serif italic text-ink-soft">
-                  No fixtures scheduled.
-                </p>
-              )}
+              <PaginatedFixtures
+                matches={data.matches.upcoming}
+                empty="No fixtures scheduled."
+              />
             </div>
           </section>
 

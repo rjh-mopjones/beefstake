@@ -300,12 +300,10 @@ export function computeStandings(matches: ApiMatch[]): Standings {
   const recent = matches
     .filter((m) => m.status === "FINISHED")
     .sort((a, b) => b.utcDate.localeCompare(a.utcDate))
-    .slice(0, 8)
     .map(toLine);
   const upcoming = matches
     .filter((m) => m.status === "SCHEDULED" || m.status === "TIMED")
     .sort((a, b) => a.utcDate.localeCompare(b.utcDate))
-    .slice(0, 8)
     .map(toLine);
 
   return {
