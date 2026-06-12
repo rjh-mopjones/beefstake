@@ -315,6 +315,9 @@ export default function Home() {
                   <Fixture key={m.id} m={m} />
                 ))}
               </div>
+              <div className="mt-2 border-t border-red/40 pt-2 text-center font-mono text-[0.62rem] font-bold uppercase tracking-widest text-red">
+                Warning: this doesn&apos;t work at all
+              </div>
             </section>
           )}
 
