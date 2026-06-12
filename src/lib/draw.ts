@@ -114,4 +114,4 @@ export const PRIZES = {
 
 // First red card isn't available on the football-data.org free tier, so set it
 // here by hand once it happens. Use the team's FIFA code, e.g. "BRA".
-export const FIRST_RED_CARD_TEAM_CODE: string | null = null;
+export const FIRST_RED_CARD_TEAM_CODE: string | null = "RSA";

@@ -18,7 +18,7 @@ function useStandings() {
 
   const load = useCallback(async () => {
     try {
-      const res = await fetch("/api/standings");
+      const res = await fetch("/api/standings", { cache: "no-store" });
       const json = await res.json();
       if (!res.ok) throw new Error(json.error ?? `HTTP ${res.status}`);
       setData(json as Standings);
@@ -286,7 +286,7 @@ export default function Home() {
                     </div>
                     <div className="text-right leading-none">
                       <div className="display text-3xl text-red">{e.goals}</div>
-                      <div className="kicker mt-1">Top Goals</div>
+                      <div className="kicker mt-1">Goals</div>
                     </div>
                   </div>
                   <hr className="rule my-2.5" />
@@ -310,7 +310,7 @@ export default function Home() {
                     <th className="text-center">Pos</th>
                     <th>Punter</th>
                     <th>Selections</th>
-                    <th className="text-right">Top Goals</th>
+                    <th className="text-right">Goals</th>
                     <th className="text-right">In</th>
                   </tr>
                 </thead>
@@ -345,9 +345,9 @@ export default function Home() {
               </table>
             </div>
             <p className="mt-2 font-serif text-sm italic text-ink-soft">
-              &ldquo;Top Goals&rdquo; is each punter&apos;s best single team&apos;s
-              tally — the £40 prize. &ldquo;In&rdquo; is teams still alive.
-              Ranked by survival first, then top goals.
+              &ldquo;Goals&rdquo; is each punter&apos;s combined tally across all
+              three teams. &ldquo;In&rdquo; is teams still alive. Ranked by
+              survival first, then goals.
             </p>
           </section>
 

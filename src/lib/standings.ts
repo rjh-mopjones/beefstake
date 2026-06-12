@@ -56,7 +56,7 @@ export type EntrantStanding = {
   rank: number;
   name: string;
   teams: TeamLine[];
-  goals: number; // goals of their single highest-scoring team
+  goals: number; // combined goals across all three teams
   alive: number; // teams not yet eliminated
 };
 
@@ -234,9 +234,8 @@ export function computeStandings(matches: ApiMatch[]): Standings {
       rank: 0,
       name: e.name,
       teams,
-      // Headline number is the single best team's goals — that's what the
-      // £40 prize tracks, not the combined total.
-      goals: Math.max(...teams.map((t) => t.gf)),
+      // Headline number is the combined goals across all three teams.
+      goals: teams.reduce((sum, t) => sum + t.gf, 0),
       alive: teams.filter((t) => t.status !== "out").length,
     };
   });
