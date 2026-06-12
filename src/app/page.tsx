@@ -114,19 +114,12 @@ function Fixture({ m }: { m: MatchLine }) {
         )}
         {m.home.name} {m.home.flag}
       </span>
-      <span className="flex shrink-0 items-center gap-1.5">
-        <span
-          className={`font-mono text-sm font-bold ${
-            m.live ? "text-red" : "text-ink"
-          }`}
-        >
-          {hasScore ? `${m.home.goals}–${m.away.goals}` : "v"}
-        </span>
-        {m.live && (
-          <span className="inline-flex items-center gap-1 rounded-sm bg-red px-1 py-px text-[0.55rem] font-bold uppercase tracking-wider text-paper">
-            <span className="blip">●</span> Live
-          </span>
-        )}
+      <span
+        className={`shrink-0 font-mono text-sm font-bold ${
+          m.live ? "text-red" : "text-ink"
+        }`}
+      >
+        {hasScore ? `${m.home.goals}–${m.away.goals}` : "v"}
       </span>
       <span className="min-w-0 flex-1 truncate text-left">
         {m.away.flag} {m.away.name}
