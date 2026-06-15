@@ -271,13 +271,11 @@ export default function Home() {
                       {data.prizes.mostGoals.holders.length > 1 && " · tied"}
                     </span>
                     {data.prizes.mostGoals.holders.map((h) => (
-                      <span key={h.team.code} className="block">
-                        <span className="font-bold uppercase tracking-wide">
-                          {h.entrant}
-                        </span>{" "}
-                        <span className="text-ink-soft">
-                          {h.team.flag} {h.team.name}
-                        </span>
+                      <span
+                        key={h.entrant}
+                        className="block font-bold uppercase tracking-wide"
+                      >
+                        {h.entrant}
                       </span>
                     ))}
                   </>

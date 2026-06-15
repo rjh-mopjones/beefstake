@@ -108,7 +108,7 @@ export const entrantByTeamCode = (code: string): Entrant | undefined =>
 
 export const PRIZES = {
   winner: { emoji: "🏆", label: "Tournament Winner", amount: 90 },
-  goals: { emoji: "⚽", label: "Team with most goals", amount: 40 },
+  goals: { emoji: "⚽", label: "Empty head with most goals", amount: 40 },
   redCard: { emoji: "🟥", label: "First red card", amount: 30 },
 } as const;
 

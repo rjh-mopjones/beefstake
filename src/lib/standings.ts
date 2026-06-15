@@ -62,7 +62,7 @@ export type EntrantStanding = {
 
 export type PrizeState = {
   winner: { entrant: string; team: TeamLine } | null;
-  mostGoals: { goals: number; holders: { entrant: string; team: TeamLine }[] };
+  mostGoals: { goals: number; holders: { entrant: string }[] };
   firstRedCard: { entrant: string; team: TeamLine } | null;
 };
 
@@ -255,14 +255,16 @@ export function computeStandings(matches: ApiMatch[]): Standings {
     ? { entrant: entrantByTeamCode(champ.code)!.name, team: champ }
     : null;
 
-  const maxGoals = allLines.reduce((max, t) => Math.max(max, t.gf), 0);
+  // Awarded to the entrant whose combined goals across all three teams is
+  // highest — not a single team's tally.
+  const maxGoals = entrants.reduce((max, e) => Math.max(max, e.goals), 0);
   const mostGoals = {
     goals: maxGoals,
     holders:
       maxGoals > 0
-        ? allLines
-            .filter((t) => t.gf === maxGoals)
-            .map((t) => ({ entrant: entrantByTeamCode(t.code)!.name, team: t }))
+        ? entrants
+            .filter((e) => e.goals === maxGoals)
+            .map((e) => ({ entrant: e.name }))
         : [],
   };
 
