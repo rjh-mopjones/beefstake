@@ -204,6 +204,24 @@ export function computeStandings(matches: ApiMatch[]): Standings {
     }
   }
 
+  // Group-stage elimination: once the knockout bracket is drawn, the teams in
+  // it are exactly the survivors. We read that off the fixtures rather than
+  // recomputing group tables (and their tiebreakers) ourselves, so every team
+  // that didn't make the cut is marked out.
+  const knockoutParticipants = new Set<string>();
+  for (const m of matches) {
+    if (!KNOCKOUT_STAGES.has(m.stage)) continue;
+    const h = resolveCode(m.homeTeam);
+    const a = resolveCode(m.awayTeam);
+    if (h) knockoutParticipants.add(h);
+    if (a) knockoutParticipants.add(a);
+  }
+  if (knockoutParticipants.size > 0) {
+    for (const [code, s] of stats) {
+      if (!knockoutParticipants.has(code)) s.eliminated = true;
+    }
+  }
+
   const lineFor = (code: string): TeamLine => {
     const t = teamByCode.get(code)!;
     const s = stats.get(code)!;
