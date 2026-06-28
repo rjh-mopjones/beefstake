@@ -259,8 +259,8 @@ export function computeStandings(matches: ApiMatch[]): Standings {
   });
   entrants.sort(
     (a, b) =>
-      b.alive - a.alive ||
       b.goals - a.goals ||
+      b.alive - a.alive ||
       a.name.localeCompare(b.name),
   );
   entrants.forEach((e, i) => (e.rank = i + 1));
