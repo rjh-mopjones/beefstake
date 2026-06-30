@@ -141,17 +141,26 @@ export function computeStandings(matches: ApiMatch[]): Standings {
     const hasGoals = hg !== null && ag !== null;
     const finished = m.status === "FINISHED";
 
+    // football-data.org folds the shootout into fullTime (e.g. a 1-1 that
+    // ends 7-6), so strip the penalties before counting goals. fullTime still
+    // drives the win/loss/elimination logic below, where its penalty inclusion
+    // correctly encodes who advanced.
+    const penH = m.score.penalties?.home ?? 0;
+    const penA = m.score.penalties?.away ?? 0;
+    const homeGoals = hasGoals ? hg! - penH : null;
+    const awayGoals = hasGoals ? ag! - penA : null;
+
     // Goals count as soon as they're on the board (live or finished).
     if (hasGoals) {
       if (homeCode) {
         const s = stats.get(homeCode)!;
-        s.gf += hg!;
-        s.ga += ag!;
+        s.gf += homeGoals!;
+        s.ga += awayGoals!;
       }
       if (awayCode) {
         const s = stats.get(awayCode)!;
-        s.gf += ag!;
-        s.ga += hg!;
+        s.gf += awayGoals!;
+        s.ga += homeGoals!;
       }
     }
 

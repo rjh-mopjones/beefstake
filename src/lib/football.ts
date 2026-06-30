@@ -38,8 +38,11 @@ export type ApiMatch = {
   awayTeam: ApiTeam;
   score: {
     winner: "HOME_TEAM" | "AWAY_TEAM" | "DRAW" | null;
+    // Note: fullTime folds in the penalty shootout result (e.g. a 1-1 that
+    // ends 7-6), so `penalties` is needed to recover the on-pitch score.
     fullTime: { home: number | null; away: number | null };
     halfTime: { home: number | null; away: number | null };
+    penalties?: { home: number | null; away: number | null } | null;
   };
 };
 
